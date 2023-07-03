@@ -1,0 +1,21 @@
+class_path: gnn_tracking.training.tc.TCModule
+init_args:
+  model:
+    class_path: lstcondensation.model.LSGraphTCN
+    init_args:
+      node_indim: 9
+      edge_indim: 3
+      h_dim: 128
+      e_dim: 128
+      h_outdim: 12
+      L_hc: 3
+  cluster_scanner:
+    class_path: gnn_tracking.postprocessing.dbscanscanner.DBSCANHyperParamScanner
+    init_args:
+      n_trials: 0
+      n_jobs: 3
+      min_samples_range: [1, 1]
+  optimizer:
+    class_path: torch.optim.Adam
+    init_args:
+      lr: 0.0005
