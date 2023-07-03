@@ -9,10 +9,19 @@ init_args:
       e_dim: 128
       h_outdim: 12
       L_hc: 3
+  lw_repulsive: 0.5
+  lw_background: 0.1
   cluster_scanner:
     class_path: gnn_tracking.postprocessing.dbscanscanner.DBSCANHyperParamScanner
     init_args:
-      n_trials: 0
+      n_trials:
+        class_path: gnn_tracking.postprocessing.clusterscanner.PulsedNTrials
+        init_args:
+          warmup_epoch: 20
+          low_trials: 6
+          high_trials: 12
+          high_every: 6
+          warmup_trials: 0
       n_jobs: 3
       min_samples_range: [1, 1]
   optimizer:
