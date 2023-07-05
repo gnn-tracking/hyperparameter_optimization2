@@ -5,12 +5,13 @@ from pytorch_lightning.callbacks import RichProgressBar
 from pytorch_lightning.cli import LightningCLI
 from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
 from pytorch_lightning.plugins.environments import SLURMEnvironment
+from rich import Console
 from wandb_osh.lightning_hooks import TriggerWandbSyncLightningCallback
 
+c = Console(width=80)
+
 name = coolname.generate_slug(3)
-print("-" * 80)
-print(name)
-print("-" * 80)
+c.rule(name)
 
 logger = WandbLogger(
     project="lst_oc",
