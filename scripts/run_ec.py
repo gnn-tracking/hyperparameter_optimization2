@@ -1,28 +1,26 @@
-import coolname
 import wandb
 from gnn_tracking.utils.loading import TrackingDataModule
 from pytorch_lightning.callbacks import RichProgressBar
 from pytorch_lightning.cli import LightningCLI
 from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
 from pytorch_lightning.plugins.environments import SLURMEnvironment
-from rich import Console
 from wandb_osh.lightning_hooks import TriggerWandbSyncLightningCallback
 
-c = Console(width=80)
+from lstcondensation.util import random_trial_name
 
-name = coolname.generate_slug(3)
-c.rule(name)
+name = random_trial_name()
+
 
 logger = WandbLogger(
-    project="lst_oc",
+    project="lst_ec",
     group="first",
     offline=True,
     version=name,
 )
 
 wandb.define_metric(
-    "max_trk.double_majority_pt0.9",
-    step_metric="trk.double_majority_pt0.9",
+    "max_mcc_pt0.9",
+    step_metric="max_mcc_pt0.9",
     summary="max",
 )
 
