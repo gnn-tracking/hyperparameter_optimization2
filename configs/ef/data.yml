@@ -1,0 +1,12 @@
+train:
+  dirs:
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/lst_data_v0/processed/
+  stop: 150
+  sample_size: 600
+  batch_size: 5
+val:
+  dirs:
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/lst_data_v0/processed/
+  start: 150
+  stop: 155
+cpus: 6

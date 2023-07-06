@@ -7,6 +7,10 @@ init_args:
       edge_indim: 3
       hidden_dim: 128
       depth: 3
+  loss_fct:
+    class_path: gnn_tracking.metrics.losses.EdgeWeightBCELoss
+    init_args:
+      pt_thld: 0.9
   optimizer:
     class_path: torch.optim.Adam
     init_args:
