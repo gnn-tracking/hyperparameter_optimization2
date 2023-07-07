@@ -5,11 +5,17 @@ init_args:
     init_args:
       node_indim: 9
       edge_indim: 3
-      h_dim: 128
-      e_dim: 128
+      h_dim: 256
+      e_dim: 256
       h_outdim: 12
-      L_hc: 3
-  lw_repulsive: 0.5
+      L_hc: 5
+      ec:
+        class_path: gnn_tracking.models.edge_classifier.ECFromChkpt
+        init_args:
+          ec_class_name: gnn_tracking.training.ec.ECModule
+          ec_chkpt_path: /home/kl5675/Documents/23/git_sync/lst-condensation-hackathon/scripts/lightning_logs/prompt-nonchalant-swift/checkpoints/epoch=195-step=117600.ckpt
+      ec_thld: 0.1
+  lw_repulsive: 0.7
   lw_background: 0.
   background_loss: null
   cluster_scanner:
