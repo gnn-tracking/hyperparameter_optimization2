@@ -1,4 +1,5 @@
 import wandb
+from gnn_tracking.training.callbacks import PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
 from pytorch_lightning.callbacks import RichProgressBar
 from pytorch_lightning.cli import LightningCLI
@@ -35,6 +36,7 @@ def cli_main():
             callbacks=[
                 RichProgressBar(leave=True),
                 TriggerWandbSyncLightningCallback(),
+                PrintValidationMetrics(),
             ],
             logger=[tb_logger, logger],
             plugins=[SLURMEnvironment()],
