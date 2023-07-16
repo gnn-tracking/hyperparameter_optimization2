@@ -1,13 +1,12 @@
 import wandb
 from gnn_tracking.training.callbacks import PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
+from gnn_tracking.utils.nomenclature import random_trial_name
 from pytorch_lightning.callbacks import RichProgressBar
 from pytorch_lightning.cli import LightningCLI
 from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
 from pytorch_lightning.plugins.environments import SLURMEnvironment
 from wandb_osh.lightning_hooks import TriggerWandbSyncLightningCallback
-
-from lstcondensation.util import random_trial_name
 
 name = random_trial_name()
 
