@@ -1,0 +1,12 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 2023.07.13
+_src_path: gh:scientific-python/cookie
+backend: hatch
+email: kilian.lieret@posteo.de
+full_name: Kilian Lieret
+license: MIT
+org: gnn-tracking
+project_name: hpo2
+project_short_description:
+  Hyperparameter optimization for the GNN tracking project
+url: https://github.com/gnn-tracking/hyperparameter_optimization2
