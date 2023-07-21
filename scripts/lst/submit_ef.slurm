@@ -18,7 +18,7 @@ export PYTHONFAULTHANDLER=1
 
 srun \
   python3 run_ec.py fit\
-  --model ../configs/ef/model.yml \
-  --trainer ../configs/ef/train.yml \
-  --data ../configs/ef/data.yml \
+  --model configs/ef/model.yml \
+  --trainer configs/ef/train.yml \
+  --data configs/ef/data.yml \
   $@

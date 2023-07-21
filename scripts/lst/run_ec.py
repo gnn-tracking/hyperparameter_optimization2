@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import wandb
+from gnn_tracking.training.callbacks import PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
 from gnn_tracking.utils.nomenclature import random_trial_name
 from pytorch_lightning.callbacks import RichProgressBar
@@ -11,15 +14,15 @@ name = random_trial_name()
 
 
 logger = WandbLogger(
-    project="lst_oc",
+    project="lst_ec",
     group="first",
     offline=True,
     version=name,
 )
 
 wandb.define_metric(
-    "max_trk.double_majority_pt0.9",
-    step_metric="trk.double_majority_pt0.9",
+    "max_mcc_pt0.9",
+    step_metric="max_mcc_pt0.9",
     summary="max",
 )
 
@@ -28,16 +31,17 @@ tb_logger = TensorBoardLogger(".", version=name)
 
 def cli_main():
     # noinspection PyUnusedLocal
-    cli = LightningCLI(  # noqa F841
+    cli = LightningCLI(  # noqa: F841
         datamodule_class=TrackingDataModule,
-        trainer_defaults=dict(
-            callbacks=[
+        trainer_defaults={
+            "callbacks": [
                 RichProgressBar(leave=True),
                 TriggerWandbSyncLightningCallback(),
+                PrintValidationMetrics(),
             ],
-            logger=[tb_logger, logger],
-            plugins=[SLURMEnvironment()],
-        ),
+            "logger": [tb_logger, logger],
+            "plugins": [SLURMEnvironment()],
+        },
     )
 
 
