@@ -14,7 +14,7 @@ name = random_trial_name()
 
 
 logger = WandbLogger(
-    project="lst_ec",
+    project="gnn_tracking_ec",
     group="first",
     offline=True,
     version=name,

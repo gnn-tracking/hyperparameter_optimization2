@@ -1,4 +1,3 @@
-gamma: 1.0
 class_path: gnn_tracking.training.ec.ECModule
 init_args:
   model:
