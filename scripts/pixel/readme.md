@@ -1,1 +1,1 @@
-# Config files for LST tracking
+# Config files for trackml Pixel tracking
