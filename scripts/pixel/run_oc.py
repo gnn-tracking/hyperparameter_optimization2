@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import wandb
-from gnn_tracking.training.callbacks import PrintValidationMetrics
+from gnn_tracking.training.callbacks import ExpandWandbConfig, PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
 from gnn_tracking.utils.nomenclature import random_trial_name
 from pytorch_lightning.callbacks import RichProgressBar
@@ -38,6 +38,7 @@ def cli_main():
                 RichProgressBar(leave=True),
                 TriggerWandbSyncLightningCallback(),
                 PrintValidationMetrics(),
+                ExpandWandbConfig(),
             ],
             "logger": [tb_logger, logger],
             "plugins": [SLURMEnvironment()],
