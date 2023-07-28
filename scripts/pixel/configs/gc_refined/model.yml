@@ -1,16 +1,12 @@
-class_path: gnn_tracking.training.tc.TCModule
+class_path: gnn_tracking.training.tc.MLModule
 init_args:
   model:
-    class_path: gnn_tracking.models.track_condensation_networks.PreTrainedECGraphTCN
+    class_path: gnn_tracking.models.graph_construction.GraphConstructionResIN
     init_args:
-      ec: null
-      node_indim: 22
-      edge_indim: 44
-      h_dim: 192
-      e_dim: 192
-      hidden_dim: 192
-      h_outdim: 12
-      L_hc: 3
+      node_dim: 22
+      edge_dim: 44
+      object_hidden_dim: 192
+      relational_hidden_dim: 192
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
