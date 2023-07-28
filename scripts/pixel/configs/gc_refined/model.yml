@@ -1,16 +1,16 @@
-class_path: gnn_tracking.training.tc.MLModule
+class_path: gnn_tracking.training.ml.MLModule
 init_args:
   model:
     class_path: gnn_tracking.models.graph_construction.GraphConstructionResIN
     init_args:
-      node_dim: 22
-      edge_dim: 44
-      object_hidden_dim: 192
-      relational_hidden_dim: 192
+      node_indim: 22
+      edge_indim: 44
+      hidden_dim: 192
+      h_outdim: 8
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
-      ml_chkpt_path: /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/model_exchange/gc/gc-7dce6aff.ckpt
+      ml_chkpt_path: /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/model_exchange/gc/spiritual-almond-aardwark.ckpt
       max_num_neighbors: 15
       max_radius: 1.
       use_embedding_features: true
@@ -23,7 +23,7 @@ init_args:
       p_attr: 2
       p_rep: 2
       r_emb: 1
-  lw_repulsive: 0.74
+  lw_repulsive: 0.00195
   gc_scanner:
     class_path: gnn_tracking.graph_construction.k_scanner.GraphConstructionKNNScanner
     init_args:
