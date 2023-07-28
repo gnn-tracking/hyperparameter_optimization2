@@ -15,34 +15,20 @@ init_args:
       max_radius: 1.
       use_embedding_features: true
       build_edge_features: true
-  lw_repulsive: 0.74
-  lw_background: 0.
-  background_loss: null
-  potential_loss:
-    class_path: gnn_tracking.metrics.losses.PotentialLoss
+  loss_fct:
+    class_path: gnn_tracking.metrics.losses.GraphConstructionHingeEmbeddingLoss
     init_args:
-      q_min: 0.01
-      radius_threshold: 1.0
       attr_pt_thld: 0.9
-  cluster_scanner:
-    class_path: gnn_tracking.postprocessing.dbscanscanner.DBSCANHyperParamScanner
+      max_num_neighbors: 256
+      p_attr: 2
+      p_rep: 2
+      r_emb: 1
+  lw_repulsive: 0.74
+  gc_scanner:
+    class_path: gnn_tracking.graph_construction.k_scanner.GraphConstructionKNNScanner
     init_args:
-      n_trials:
-        class_path: gnn_tracking.postprocessing.clusterscanner.PulsedNTrials
-        init_args:
-          warmup_epoch: 0
-          low_trials: 6
-          high_trials: 12
-          high_every: 3
-      n_jobs: 3
-      min_samples_range: [1, 1]
+      ks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   optimizer:
     class_path: torch.optim.Adam
     init_args:
       lr: 0.0008
-  scheduler:
-    class_path: torch.optim.lr_scheduler.LinearLR
-    init_args:
-      start_factor: 1.
-      end_factor: 0.1
-      tota_iters: 18

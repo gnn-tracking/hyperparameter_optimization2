@@ -49,4 +49,4 @@ init_args:
     init_args:
       start_factor: 1.
       end_factor: 0.1
-      tota_iters: 18
+      total_iters: 18
