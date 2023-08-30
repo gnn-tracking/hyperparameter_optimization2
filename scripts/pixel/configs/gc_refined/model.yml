@@ -3,18 +3,19 @@ init_args:
   model:
     class_path: gnn_tracking.models.graph_construction.GraphConstructionResIN
     init_args:
-      node_indim: 22
-      edge_indim: 44
+      node_indim: 278
+      edge_indim: 556
       hidden_dim: 192
       h_outdim: 8
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
-      ml_chkpt_path: /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/model_exchange/gc/spiritual-almond-aardwark.ckpt
-      max_num_neighbors: 15
+      ml_chkpt_path: /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/model_exchange/gc/pristine-chestnut-badger.ckpt
+      max_num_neighbors: 5
       max_radius: 1.
       use_embedding_features: true
       build_edge_features: true
+      use_intermediate_embedding_features: true
   loss_fct:
     class_path: gnn_tracking.metrics.losses.GraphConstructionHingeEmbeddingLoss
     init_args:
