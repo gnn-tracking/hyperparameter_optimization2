@@ -9,6 +9,7 @@ train:
     - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v5/part_7
     - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v5/part_8
   sample_size: 28800
+  batch_size: 4
 val:
   dirs:
     - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v5/part_9
