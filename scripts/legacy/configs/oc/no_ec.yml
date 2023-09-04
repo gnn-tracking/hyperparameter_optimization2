@@ -12,6 +12,7 @@ init_args:
       h_outdim: 12
       L_hc: 3
       alpha_hc: 0.4
+      feed_edge_weights: true
   lw_repulsive: 0.4
   lw_background: 0.004
   background_loss:
