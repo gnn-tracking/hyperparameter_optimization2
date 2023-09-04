@@ -48,6 +48,7 @@ def cli_main():
             ],
             "logger": [tb_logger, logger],
             "plugins": [SLURMEnvironment()],
+            "gradient_clip_val": 0.5,
         },
         seed_everything_default=42,
     )

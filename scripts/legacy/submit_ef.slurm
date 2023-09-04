@@ -4,7 +4,7 @@
 #SBATCH --output=slurm_logs/pl-run-%j.log
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --time=5:00:00
+#SBATCH --time=3:00:00
 #SBATCH --cpus-per-task 6
 #SBATCH --gres=gpu:1
 #SBATCH --mem-per-cpu=12G
@@ -18,7 +18,7 @@ export PYTHONFAULTHANDLER=1
 
 srun \
   python3 run_ec.py fit\
-  --model configs/ec/model.yml \
-  --data configs/data_cut.yml \
+  --model configs/ef/model.yml \
+  --data configs/data.yml \
   --config configs/config.yml \
   $@
