@@ -16,9 +16,4 @@
 export NCCL_DEBUG=INFO
 export PYTHONFAULTHANDLER=1
 
-srun \
-  python3 run_ec.py fit\
-  --model configs/ec/model.yml \
-  --data configs/data_cut.yml \
-  --config configs/config.yml \
-  $@
+srun python3 run_ec.py fit $@
