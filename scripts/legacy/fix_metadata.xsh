@@ -1,6 +1,8 @@
 #!/usr/bin/env xonsh
 
 $XONSH_SHOW_TRACEBACK = True
+$RAISE_SUBPROC_ERROR = True
+
 search_str=$ARG1
 results=$(find .  -path  ./lightning_logs/*@(search_str)*/hparams.yaml).strip()
 

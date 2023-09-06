@@ -1,5 +1,8 @@
 #!/usr/bin/env xonsh
 
+$XONSH_SHOW_TRACEBACK = True
+$RAISE_SUBPROC_ERROR = True
+
 import itertools
 import random
 
