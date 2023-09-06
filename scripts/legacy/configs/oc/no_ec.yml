@@ -11,7 +11,7 @@ init_args:
       hidden_dim: 192
       h_outdim: 12
       L_hc: 5
-      alpha_hc: 0.4
+      alpha_hc: 0.8
       feed_edge_weights: false
   lw_repulsive: 0.4
   lw_background: 0.004
