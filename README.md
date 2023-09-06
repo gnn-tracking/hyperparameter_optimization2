@@ -27,6 +27,13 @@ pip3 install --editable '.[dev,testing]'
 
 for this library.
 
+For the helper scripts, install [xonsh][]:
+
+```bash
+pip3 install xonsh
+xonsh link_bin.xsh
+```
+
 ## 📖 Further reads
 
 - [wandb-osh](https://github.com/klieret/wandb-offline-sync-hook/): package to
@@ -41,5 +48,6 @@ for this library.
 [wandb]:                    https://wandb.ai/
 [yaml]:                     https://yaml.org/
 [slurm]:                    https://slurm.schedmd.com/documentation.html
+[xonsh]: https://xon.sh/
 
 <!-- prettier-ignore-end -->

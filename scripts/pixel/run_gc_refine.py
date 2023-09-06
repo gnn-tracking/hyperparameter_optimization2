@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import wandb
 from gnn_tracking.training.callbacks import ExpandWandbConfig, PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
 from gnn_tracking.utils.nomenclature import random_trial_name
@@ -14,17 +13,12 @@ name = random_trial_name()
 
 
 logger = WandbLogger(
-    project="gnn_tracking",
-    group="no-ec",
+    project="gnn_tracking_gc",
+    group="gc-refine",
     offline=True,
     version=name,
 )
 
-wandb.define_metric(
-    "max_trk.double_majority_pt0.9",
-    step_metric="trk.double_majority_pt0.9",
-    summary="max",
-)
 
 tb_logger = TensorBoardLogger(".", version=name)
 

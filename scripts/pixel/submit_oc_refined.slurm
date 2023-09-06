@@ -19,7 +19,7 @@ export PYTHONFAULTHANDLER=1
 
 srun \
   python3 run_oc.py fit\
-  --model configs/oc/model.yml \
+  --model configs/oc_refined/model.yml \
   --trainer configs/oc/train.yml \
   --data configs/oc/data.yml \
   $@

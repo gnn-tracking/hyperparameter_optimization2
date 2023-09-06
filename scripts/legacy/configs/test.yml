@@ -1,0 +1,3 @@
+trainer:
+  limit_train_batches: 1
+  max_epochs: 2

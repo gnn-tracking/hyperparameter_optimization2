@@ -14,19 +14,19 @@ name = random_trial_name()
 
 
 logger = WandbLogger(
-    project="gnn_tracking",
-    group="no-ec",
+    project="gnn_tracking_ec",
+    group="first",
     offline=True,
     version=name,
 )
 
 wandb.define_metric(
-    "max_trk.double_majority_pt0.9",
-    step_metric="trk.double_majority_pt0.9",
+    "max_mcc_pt0.9",
+    step_metric="max_mcc_pt0.9",
     summary="max",
 )
 
-tb_logger = TensorBoardLogger(".", version=name)
+tb_logger = TensorBoardLogger(save_dir=".", version=name)
 
 
 def cli_main():
@@ -43,6 +43,7 @@ def cli_main():
             "logger": [tb_logger, logger],
             "plugins": [SLURMEnvironment()],
         },
+        seed_everything_default=42,
     )
 
 

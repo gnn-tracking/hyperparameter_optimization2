@@ -4,7 +4,7 @@ import wandb
 from gnn_tracking.training.callbacks import ExpandWandbConfig, PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
 from gnn_tracking.utils.nomenclature import random_trial_name
-from pytorch_lightning.callbacks import RichProgressBar
+from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint, RichProgressBar
 from pytorch_lightning.cli import LightningCLI
 from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
 from pytorch_lightning.plugins.environments import SLURMEnvironment
@@ -15,9 +15,10 @@ name = random_trial_name()
 
 logger = WandbLogger(
     project="gnn_tracking",
-    group="no-ec",
+    group="legcay",
     offline=True,
     version=name,
+    tags=["geometric-gc"],
 )
 
 wandb.define_metric(
@@ -39,9 +40,14 @@ def cli_main():
                 TriggerWandbSyncLightningCallback(),
                 PrintValidationMetrics(),
                 ExpandWandbConfig(),
+                EarlyStopping(monitor="total", mode="min", patience=20),
+                ModelCheckpoint(
+                    save_top_k=2, monitor="trk.double_majority_pt0.9", mode="max"
+                ),
             ],
             "logger": [tb_logger, logger],
             "plugins": [SLURMEnvironment()],
+            "gradient_clip_val": 0.5,
         },
     )
 

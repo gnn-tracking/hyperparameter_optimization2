@@ -10,15 +10,18 @@ init_args:
       e_dim: 192
       hidden_dim: 192
       h_outdim: 12
-      L_hc: 3
+      L_hc: 2
+      alpha_latent: 0.5
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
-      ml_chkpt_path: /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/model_exchange/gc/gc-7dce6aff.ckpt
-      max_num_neighbors: 15
+      ml_chkpt_path: /home/kl5675/Documents/23/git_sync/hyperparameter_optimization2/scripts/pixel/lightning_logs/quokka-of-algebraic-dew/checkpoints/epoch=59-step=54000.ckpt
+      max_num_neighbors: 3
       max_radius: 1.
       use_embedding_features: true
       build_edge_features: true
+      ml_model_only: false
+      ml_freeze: false
   lw_repulsive: 0.74
   lw_background: 0.
   background_loss: null
