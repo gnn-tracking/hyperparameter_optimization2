@@ -15,7 +15,7 @@ name = random_trial_name()
 
 logger = WandbLogger(
     project="gnn_tracking",
-    group="legcay",
+    group="legacy",
     offline=True,
     version=name,
     tags=["geometric-gc"],
