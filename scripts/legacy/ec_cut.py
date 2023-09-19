@@ -32,6 +32,6 @@ if __name__ == "__main__":
             )
         ],
         redo=False,
-        n_files=300,
-        start=300 * int(batch_num),
+        n_files=75,
+        start=75 * int(batch_num),
     )
