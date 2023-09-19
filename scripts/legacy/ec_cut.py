@@ -15,7 +15,7 @@ if __name__ == "__main__":
     )
     ecc = ECCut(
         ec,
-        thld=0.3,
+        thld=0.35,
     )
     gcc = DataTransformer(
         transform=ecc,
@@ -23,15 +23,15 @@ if __name__ == "__main__":
     gcc.process_directories(
         input_dirs=[
             Path(
-                f"/scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v6/part_{part}/"
+                f"/scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v6_cut/part_{part}/"
             )
         ],
         output_dirs=[
             Path(
-                f"/scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v6_cut/part_{part}/"
+                f"/scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v6_cut2/part_{part}/"
             )
         ],
         redo=False,
-        n_files=75,
-        start=75 * int(batch_num),
+        n_files=500,
+        start=500 * int(batch_num),
     )
