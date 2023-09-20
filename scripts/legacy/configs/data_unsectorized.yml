@@ -1,0 +1,17 @@
+train:
+  dirs:
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v8/part_1
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v8/part_2
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v8/part_3
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v8/part_4
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v8/part_5
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v8/part_6
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v8/part_7
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v8/part_8
+  sample_size: 900
+  batch_size: 1
+val:
+  dirs:
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v7/part_9
+  stop: 5
+cpus: 6
