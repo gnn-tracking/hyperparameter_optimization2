@@ -23,15 +23,15 @@ if __name__ == "__main__":
     gcc.process_directories(
         input_dirs=[
             Path(
-                f"/scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v8/part_{part}/"
+                f"/scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v7/part_{part}/"
             )
         ],
         output_dirs=[
             Path(
-                f"/scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v8_cut/part_{part}/"
+                f"/scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v7_cut/part_{part}/"
             )
         ],
         redo=False,
-        n_files=500,
-        start=500 * int(batch_num),
+        n_files=500 * 32,
+        start=500 * 32 * int(batch_num),
     )
