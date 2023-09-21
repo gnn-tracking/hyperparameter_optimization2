@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+import torch
 import wandb
 from gnn_tracking.training.callbacks import ExpandWandbConfig, PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
 from gnn_tracking.utils.nomenclature import random_trial_name
-from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint, RichProgressBar
+from pytorch_lightning.callbacks import ModelCheckpoint, RichProgressBar
 from pytorch_lightning.cli import LightningCLI
 from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
 from pytorch_lightning.plugins.environments import SLURMEnvironment
@@ -14,23 +15,25 @@ name = random_trial_name()
 
 
 logger = WandbLogger(
-    project="gnn_tracking",
-    group="legacy",
+    project="gnn_tracking_ec",
+    group="proceedings-legacy",
     offline=True,
     version=name,
     tags=["geometric-gc"],
 )
 
 wandb.define_metric(
-    "max_trk.double_majority_pt0.9",
-    step_metric="trk.double_majority_pt0.9",
+    "max_mcc_pt0.9",
+    step_metric="max_mcc_pt0.9",
     summary="max",
 )
 
-tb_logger = TensorBoardLogger(".", version=name)
+tb_logger = TensorBoardLogger(save_dir=".", version=name)
 
 
 def cli_main():
+    torch.set_float32_matmul_precision("medium")
+
     # noinspection PyUnusedLocal
     cli = LightningCLI(  # noqa: F841
         datamodule_class=TrackingDataModule,
@@ -40,15 +43,13 @@ def cli_main():
                 TriggerWandbSyncLightningCallback(),
                 PrintValidationMetrics(),
                 ExpandWandbConfig(),
-                EarlyStopping(monitor="total", mode="min", patience=20),
-                ModelCheckpoint(
-                    save_top_k=2, monitor="trk.double_majority_pt0.9", mode="max"
-                ),
+                ModelCheckpoint(save_top_k=2, monitor="max_mcc_pt0.9", mode="max"),
             ],
             "logger": [tb_logger, logger],
             "plugins": [SLURMEnvironment()],
             "gradient_clip_val": 0.5,
         },
+        seed_everything_default=42,
     )
 
 

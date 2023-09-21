@@ -12,6 +12,6 @@ train:
   batch_size: 1
 val:
   dirs:
-    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v7/part_9
+    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v8/part_9
   stop: 5
 cpus: 6
