@@ -11,8 +11,12 @@ init_args:
       hidden_dim: 192
       h_outdim: 12
       L_hc: 5
-      alpha_hc: 0.4
-      feed_edge_weights: true
+      alpha_hc: 0.8
+      feed_edge_weights: false
+  preproc:
+    class_path: gnn_tracking.graph_construction.data_transformer.ECCutRefine
+    init_args:
+      thld: 0.1
   lw_repulsive: 0.4
   lw_background: 0.004
   background_loss:

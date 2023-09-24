@@ -16,7 +16,7 @@ def test(path: Path):
     try:
         torch.load(path)
     except:  # noqa: E722
-        tqdm.write(path)
+        tqdm.write(str(path))
 
 
 if __name__ == "__main__":
