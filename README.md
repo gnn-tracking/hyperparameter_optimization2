@@ -2,6 +2,7 @@
 
 <!-- SPHINX-START -->
 
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/gnn-tracking/hyperparameter_optimization2/main.svg)](https://results.pre-commit.ci/latest/github/gnn-tracking/hyperparameter_optimization2/main)
 [![Actions Status][actions-badge]][actions-link]
 
 This repository hosts submission scripts and framework for hyperparameter
