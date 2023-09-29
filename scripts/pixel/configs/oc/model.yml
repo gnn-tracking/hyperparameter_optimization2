@@ -9,8 +9,8 @@ init_args:
       h_dim: 192
       e_dim: 192
       hidden_dim: 192
-      h_outdim: 12
-      L_hc: 3
+      h_outdim: 24
+      L_hc: 5
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
