@@ -17,6 +17,15 @@ refactored to use [pytorch lightning][pylit].
 - Submission files for [SLURM][slurm]
 - Upload your results to the [Weights & Biases][wandb] platform
 
+## 🗺️ Layout of this repository
+
+- `scripts`: This is the main content: All the config files and submission scripts
+  to start training are here
+- `bin`: Helper scripts that might be worth adding to your `$PATH` (i.e., that apply
+  to all experiments/subprojects)
+- `src/hpo2`: Python package with additional helper files that don't have a place
+  in the main library (currently empty)
+
 ## 🚀 Installation
 
 First, follow the instructions from [the main library][main library] to set up
