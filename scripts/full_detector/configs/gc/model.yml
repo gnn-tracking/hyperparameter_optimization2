@@ -5,7 +5,7 @@ init_args:
     init_args:
       beta: 0.4
       depth: 6
-      hidden_dim: 512
+      hidden_dim: 256
       in_dim: 14
       out_dim: 24
   loss_fct:
