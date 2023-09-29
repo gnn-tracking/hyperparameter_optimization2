@@ -1,9 +1,0 @@
-train:
-  dirs:
-    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v4/part_1
-  sample_size: 900
-val:
-  dirs:
-    - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/graphs_v4/part_1
-  stop: 5
-cpus: 6
