@@ -63,7 +63,7 @@ def cli_main():
                 PrintValidationMetrics(),
                 ExpandWandbConfig(),
                 EarlyStopping(monitor="total", mode="min", patience=10),
-                ModelCheckpoint(save_top_k=2, monitor="total", mode="max"),
+                ModelCheckpoint(save_top_k=2, monitor="total", mode="min"),
             ],
             "logger": [tb_logger, wandb_logger],
             "plugins": [SLURMEnvironment()],
