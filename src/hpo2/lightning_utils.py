@@ -13,4 +13,13 @@ class TorchCompileCLI(LightningCLI):
 
     def fit(self, model, **kwargs):
         model.model = torch.compile(model.model)
+        if model.preproc is not None:
+            model.preproc = torch.compile(model.preproc)
+        self.trainer.fit(model, **kwargs)
+
+
+class TorchCompilePreprocCLI(LightningCLI):
+    def fit(self, model, **kwargs):
+        if model.preproc is not None:
+            model.preproc = torch.compile(model.preproc)
         self.trainer.fit(model, **kwargs)
