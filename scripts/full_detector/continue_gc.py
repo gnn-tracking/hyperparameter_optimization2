@@ -20,7 +20,7 @@ wandb_logger = WandbLogger(
     group="full-detector",
     offline=True,
     version=name,
-    tags=["full-detector"],
+    tags=["full-detector", "continued"],
 )
 
 
@@ -32,21 +32,17 @@ class CLI(LightningCLI):
         # Want weights only, not optimizer states etc.
         parser.add_argument("--ckpt", type=str, required=True)
 
-    @staticmethod
-    def _get_epoch_from_ckpt_name(name: str) -> int:
-        epoch_str = name.split("-")[0]
-        return int(epoch_str.split("=")[1])
-
     def fit(self, model: MLModule, **kwargs):
+        ckpt = self.config["fit"]["ckpt"]
+        logger.debug(f"Loading state dict from {ckpt}")
+        ckpt_loaded = torch.load(ckpt, map_location=model.device)
+        model.load_state_dict(ckpt_loaded["state_dict"])
         logger.debug("Compiling model")
         model.model = torch.compile(model.model)
-        logger.debug(f"Loading state dict from {self.config['ckpt']}")
-        state_dict = torch.load(self.config["ckpt"], map_location=model.device)[
-            "state_dict"
-        ]
-        model.load_state_dict(state_dict)
-        self.trainer.current_epoch = self._get_epoch_from_ckpt_name(self.config["ckpt"])
-        logger.debug(f"Setting start epoch to {self.trainer.current_epoch}")
+        self.trainer.fit_loop.epoch_progress.load_state_dict(
+            ckpt_loaded["loops"]["fit_loop"]["epoch_progress"]
+        )
+        logger.debug(f"Start epoch set to {self.trainer.current_epoch}")
         self.trainer.fit(model, **kwargs)
 
 
