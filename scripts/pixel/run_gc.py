@@ -16,10 +16,10 @@ name = random_trial_name()
 
 logger = WandbLogger(
     project="gnn_tracking_gc",
-    group="full-detector",
+    group="pixel-gc",
     offline=True,
     version=name,
-    tags=["full-detector"],
+    tags=["pixel"],
 )
 
 
