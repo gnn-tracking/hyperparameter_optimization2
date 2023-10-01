@@ -4,10 +4,10 @@ init_args:
     class_path: gnn_tracking.models.graph_construction.GraphConstructionFCNN
     init_args:
       beta: 0.4
-      depth: 6
-      hidden_dim: 256
+      depth: 5
+      hidden_dim: 512
       in_dim: 14
-      out_dim: 24
+      out_dim: 12
   loss_fct:
     class_path: gnn_tracking.metrics.losses.GraphConstructionHingeEmbeddingLoss
     init_args:
