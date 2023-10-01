@@ -11,11 +11,13 @@ init_args:
       hidden_dim: 192
       h_outdim: 24
       L_hc: 5
+      alpha_latent: 0
+      n_embedding_coords: 0
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
-      ml_chkpt_path: /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/model_exchange/gc/gc-7dce6aff.ckpt
-      max_num_neighbors: 15
+      ml_chkpt_path: /home/dc3896/devdoot-gnn-tracking-experiments/experiments/lightning_logs/quiet-origami-prawn/checkpoints/epoch=136-n_edges_frac_segment50_95=197442.95.ckpt
+      max_num_neighbors: 6
       max_radius: 1.
       use_embedding_features: true
       build_edge_features: true

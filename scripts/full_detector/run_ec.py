@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import torch
 import wandb
 from gnn_tracking.training.callbacks import ExpandWandbConfig, PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
@@ -15,25 +14,23 @@ name = random_trial_name()
 
 
 logger = WandbLogger(
-    project="gnn_tracking",
-    group="no-ec",
+    project="gnn_tracking_ec",
+    group="merciful-reindeer-of-coffee",
     offline=True,
     version=name,
-    tags=["gc:quiet-origami-prawn"],
+    tags=["mlgc", "full-detector", "mlgc:merciful-reindeer-of-coffee"],
 )
 
 wandb.define_metric(
-    "max_trk.double_majority_pt0.9",
-    step_metric="trk.double_majority_pt0.9",
+    "max_mcc_pt0.9",
+    step_metric="max_mcc_pt0.9",
     summary="max",
 )
 
-tb_logger = TensorBoardLogger(".", version=name)
+tb_logger = TensorBoardLogger(save_dir=".", version=name)
 
 
 def cli_main():
-    torch.set_float32_matmul_precision("medium")
-
     # noinspection PyUnusedLocal
     cli = LightningCLI(  # noqa: F841
         datamodule_class=TrackingDataModule,
@@ -44,13 +41,12 @@ def cli_main():
                 PrintValidationMetrics(),
                 ExpandWandbConfig(),
                 EarlyStopping(monitor="total", mode="min", patience=20),
-                ModelCheckpoint(
-                    save_top_k=2, monitor="trk.double_majority_pt0.9", mode="max"
-                ),
+                ModelCheckpoint(save_top_k=2, monitor="total", mode="min"),
             ],
             "logger": [tb_logger, logger],
             "plugins": [SLURMEnvironment()],
         },
+        seed_everything_default=42,
     )
 
 
