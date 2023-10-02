@@ -53,9 +53,10 @@ class ContinueTrainingCLI(LightningCLI):
     def __init__(
         self, *, compile_model: bool = False, continue_epoch: bool = True, **kwargs
     ):
-        super().__init__(**kwargs)
+        # Attrs need to be set before __init__, because it will already start processing
         self._compile_model = compile_model
         self._continue_epoch = continue_epoch
+        super().__init__(**kwargs)
 
     def add_arguments_to_parser(self, parser: LightningArgumentParser) -> None:
         # Want weights only, not optimizer states etc.
