@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-#SBATCH --job-name=pl-run
-#SBATCH --output=slurm_logs/pl-run-%j.log
+#SBATCH --job-name=pixel-oc
+#SBATCH --output=slurm_logs/pixel-oc-%j.log
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=24:00:00
