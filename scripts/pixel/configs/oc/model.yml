@@ -22,11 +22,8 @@ init_args:
       use_embedding_features: true
       build_edge_features: true
   lw_repulsive: 0.74
-  lw_background: 0.01
-  background_loss:
-    class_path: gnn_tracking.metrics.losses.BackgroundLoss
-    init_args:
-      sb: 0.09
+  lw_background: 0.
+  background_loss: null
   potential_loss:
     class_path: gnn_tracking.metrics.losses.PotentialLoss
     init_args:
