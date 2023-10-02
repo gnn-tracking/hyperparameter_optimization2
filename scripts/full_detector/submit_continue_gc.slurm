@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#SBATCH --job-name=pl-run
+#SBATCH --job-name=full-gc-continue
 #SBATCH --output=slurm_logs/pl-run-%j.log
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1

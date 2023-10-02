@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-#SBATCH --job-name=pl-run
-#SBATCH --output=slurm_logs/pl-run-%j.log
+#SBATCH --job-name=pixel-oc-refine
+#SBATCH --output=slurm_logs/pixel-oc-refine-%j.log
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=14:00:00
