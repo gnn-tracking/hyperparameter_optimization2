@@ -6,10 +6,10 @@ model:
     optimizer:
       class_path: torch.optim.Adam
       init_args:
-        lr: 0.0001
+        lr: 0.0005
     scheduler:
       class_path: torch.optim.lr_scheduler.LinearLR
       init_args:
         start_factor: 1.
-        end_factor: 0.01
-        total_iters: 40
+        end_factor: 0.1
+        total_iters: 10
