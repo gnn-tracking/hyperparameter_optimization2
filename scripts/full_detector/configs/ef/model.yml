@@ -11,12 +11,12 @@ init_args:
     class_path: gnn_tracking.metrics.losses.HaughtyFocalLoss
     init_args:
       pt_thld: 0.9
-      alpha: 0.5
+      alpha: 0.9
       gamma: 0.0
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
-      ml_chkpt_path: /home/kl5675/Documents/23/git_sync/hyperparameter_optimization2/scripts/full_detector/lightning_logs/merciful-reindeer-of-coffee/checkpoints/epoch=79-step=72000.ckpt
+      ml_chkpt_path: /home/kl5675/Documents/23/git_sync/hyperparameter_optimization2/scripts/full_detector/lightning_logs/merciful-reindeer-of-coffee/checkpoints/epoch=79-step=72000.compat.ckpt
       max_num_neighbors: 15
       max_radius: 1.
       use_embedding_features: true

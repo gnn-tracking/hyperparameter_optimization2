@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import torch
 import wandb
 from gnn_tracking.training.callbacks import ExpandWandbConfig, PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
@@ -31,6 +32,8 @@ tb_logger = TensorBoardLogger(save_dir=".", version=name)
 
 
 def cli_main():
+    torch.set_float32_matmul_precision("medium")
+
     # noinspection PyUnusedLocal
     cli = LightningCLI(  # noqa: F841
         datamodule_class=TrackingDataModule,
