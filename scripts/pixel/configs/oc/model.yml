@@ -17,7 +17,7 @@ init_args:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
       ml_chkpt_path: /home/dc3896/devdoot-gnn-tracking-experiments/experiments/lightning_logs/quiet-origami-prawn/checkpoints/epoch=136-n_edges_frac_segment50_95=197442.95.ckpt
-      max_num_neighbors: 9
+      max_num_neighbors: 8
       max_radius: 1.
       use_embedding_features: true
       build_edge_features: true
@@ -48,4 +48,4 @@ init_args:
     init_args:
       start_factor: 1.
       end_factor: 0.1
-      total_iters: 18
+      total_iters: 50
