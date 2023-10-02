@@ -16,7 +16,23 @@ def cli():
         help="Project names",
         nargs="+",
     )
+    parser.add_argument(
+        "-i",
+        "--ignore-search-errors",
+        action="store_true",
+        help="Ignore errors from search results",
+    )
+    parser.add_argument(
+        "-s",
+        "--skip-sync-if-unchanged",
+        action="store_true",
+        help="Skip syncing if no changes to wandb config",
+    )
     return parser
+
+
+class InvalidSearchResults(ValueError):
+    pass
 
 
 def find_exactly_one_file(glob_str: str) -> Path:
@@ -24,7 +40,7 @@ def find_exactly_one_file(glob_str: str) -> Path:
     logger.debug(f"{glob_str=} with {results=}")
     if (n_results := len(results)) != 1:
         msg = f"Search string {glob_str} bad, found {n_results} results"
-        raise ValueError(msg)
+        raise InvalidSearchResults(msg)
     return results[0]
 
 
@@ -38,19 +54,29 @@ def find_wandb_config(project_name: str) -> Path:
     return find_exactly_one_file(glob_str)
 
 
-def merge_configs(hparams_path: Path, wandb_config_path: Path) -> None:
+def merge_configs(hparams_path: Path, wandb_config_path: Path) -> bool:
+    """Merges hparams into wandb config
+
+    Args:
+        hparams_path:
+        wandb_config_path:
+
+    Returns:
+        True if changes were made, false otherwise
+    """
     with hparams_path.open() as f:
         hparams = yaml.load(f, Loader=yaml.SafeLoader)
     with wandb_config_path.open() as f:
         existing_wandb_config = yaml.load(f, Loader=yaml.SafeLoader)
     new_wandb_config = hparams | existing_wandb_config
     if new_wandb_config == existing_wandb_config:
-        logger.debug("No changes to wandb config")
-        return
+        logger.info("No changes to wandb config")
+        return False
     with wandb_config_path.open("w") as f:
         yaml.dump(new_wandb_config, f)
-    logger.debug("Merged wandb config:")
+    logger.info("Merged wandb config")
     logger.debug(pprint.pformat(new_wandb_config, indent=2))
+    return True
 
 
 def sync_wandb(wandb_base_dir: Path) -> None:
@@ -64,10 +90,17 @@ def main():
     args = cli().parse_args()
     for name in args.names:
         logger.info(f"{name=}")
-        hparams_path = find_hparams(name)
-        wandb_config_path = find_wandb_config(name)
-        merge_configs(hparams_path, wandb_config_path)
-        sync_wandb(wandb_config_path.parent.parent)
+        try:
+            hparams_path = find_hparams(name)
+            wandb_config_path = find_wandb_config(name)
+        except InvalidSearchResults as e:
+            if args.ignore_search_errors:
+                logger.warning(e)
+                continue
+            raise e
+        changes = merge_configs(hparams_path, wandb_config_path)
+        if changes or not args.skip_sync_if_unchanged:
+            sync_wandb(wandb_config_path.parent.parent)
 
 
 if __name__ == "__main__":
