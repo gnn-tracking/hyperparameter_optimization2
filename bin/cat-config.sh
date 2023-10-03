@@ -7,5 +7,4 @@ IFS=$'\n\t'
 # shellcheck disable=SC2012
 # (find instead of ls not necessary here)
 name=$(ls lightning_logs|fzf)
-# shellcheck disable=SC2086
-less wandb/*${name}*/files/output.log
+less "lightning_logs/${name}/config.yaml"

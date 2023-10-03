@@ -5,7 +5,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 if [[ $# -eq 0 ]]; then
-  jobID=$(squeue -u "$USER" -o "%A" -h|fzf)
+  jobID=$(squeue -u "$USER" -h | fzf | awk '{print $1}')
 else
   jobID=$1
 fi
