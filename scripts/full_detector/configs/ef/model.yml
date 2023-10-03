@@ -3,12 +3,12 @@ init_args:
   model:
     class_path: gnn_tracking.models.edge_filter.EFMLP
     init_args:
-      node_indim: 38
-      edge_indim: 76
-      hidden_dim: 128
-      depth: 3
+      node_indim: 14
+      edge_indim: 28
+      hidden_dim: 256
+      depth: 5
   loss_fct:
-    class_path: gnn_tracking.metrics.losses.HaughtyFocalLoss
+    class_path: gnn_tracking.metrics.losses.EdgeWeightBCELoss
     init_args:
       pt_thld: 0.9
       alpha: 0.9
@@ -19,7 +19,7 @@ init_args:
       ml_chkpt_path: /home/kl5675/Documents/23/git_sync/hyperparameter_optimization2/scripts/full_detector/lightning_logs/merciful-reindeer-of-coffee/checkpoints/epoch=79-step=72000.compat.ckpt
       max_num_neighbors: 15
       max_radius: 1.
-      use_embedding_features: true
+      use_embedding_features: false
       build_edge_features: true
   optimizer:
     class_path: torch.optim.Adam
