@@ -22,3 +22,5 @@ srun \
   --trainer configs/ef/train.yml \
   --data configs/ef/data.yml \
   $@
+
+jobstats $SLURM_JOB_ID

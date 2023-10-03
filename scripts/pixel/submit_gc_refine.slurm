@@ -23,3 +23,5 @@ srun \
   --data configs/data.yml \
   --config configs/config.yml \
   $@
+
+jobstats $SLURM_JOB_ID

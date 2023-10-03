@@ -17,3 +17,5 @@ export NCCL_DEBUG=INFO
 export PYTHONFAULTHANDLER=1
 
 srun python3 run_gc.py fit $@
+
+jobstats $SLURM_JOB_ID
