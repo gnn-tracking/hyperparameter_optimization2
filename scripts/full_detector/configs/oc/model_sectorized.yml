@@ -4,20 +4,20 @@ init_args:
     class_path: gnn_tracking.models.track_condensation_networks.PreTrainedECGraphTCN
     init_args:
       ec: null
-      node_indim: 22
-      edge_indim: 44
-      h_dim: 256
-      e_dim: 256
-      hidden_dim: 256
+      node_indim: 38
+      edge_indim: 76
+      h_dim: 192
+      e_dim: 192
+      hidden_dim: 192
       h_outdim: 24
       L_hc: 5
       alpha_latent: 0.5
-      n_embedding_coords: 8
+      n_embedding_coords: 24
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
-      ml_chkpt_path: /home/dc3896/devdoot-gnn-tracking-experiments/experiments/lightning_logs/quiet-origami-prawn/checkpoints/epoch=136-n_edges_frac_segment50_95=197442.95.ckpt
-      max_num_neighbors: 8
+      ml_chkpt_path: /home/kl5675/Documents/23/git_sync/hyperparameter_optimization2/scripts/full_detector/lightning_logs/merciful-reindeer-of-coffee/checkpoints/epoch=79-step=72000.compat.ckpt
+      max_num_neighbors: 15
       max_radius: 1.
       use_embedding_features: true
       build_edge_features: true
@@ -45,4 +45,4 @@ init_args:
     init_args:
       start_factor: 1.
       end_factor: 0.1
-      total_iters: 50
+      total_iters: 18

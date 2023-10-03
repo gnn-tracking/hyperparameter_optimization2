@@ -6,9 +6,9 @@ init_args:
       ec: null
       node_indim: 38
       edge_indim: 76
-      h_dim: 192
-      e_dim: 192
-      hidden_dim: 192
+      h_dim: 256
+      e_dim: 256
+      hidden_dim: 256
       h_outdim: 24
       L_hc: 5
       alpha_latent: 0.5
@@ -21,7 +21,7 @@ init_args:
       max_radius: 1.
       use_embedding_features: true
       build_edge_features: true
-  lw_repulsive: 0.74
+  lw_repulsive: 5
   lw_background: 0.
   background_loss: null
   potential_loss:
