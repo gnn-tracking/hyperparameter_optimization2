@@ -1,0 +1,7 @@
+model:
+  init_args:
+    optimizer:
+      class_path: torch.optim.Adam
+      init_args:
+        lr: 0.000002
+        betas: [0.95, 0.999]

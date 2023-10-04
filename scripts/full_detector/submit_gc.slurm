@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #SBATCH --job-name=full-gc
-#SBATCH --output=slurm_logs/pl-run-%j.log
+#SBATCH --output=slurm_logs/full-gc-%j.log
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=16:00:00

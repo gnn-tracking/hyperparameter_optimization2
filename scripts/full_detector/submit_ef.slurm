@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #SBATCH --job-name=full-ef
-#SBATCH --output=slurm_logs/pl-run-%j.log
+#SBATCH --output=slurm_logs/full-ef-%j.log
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=6:00:00
