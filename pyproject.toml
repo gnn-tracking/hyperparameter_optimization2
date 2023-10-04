@@ -29,9 +29,7 @@ classifiers = [
   "Typing :: Typed",
 ]
 dynamic = ["version"]
-dependencies = [
-  "typing_extensions >=4.6; python_version<'3.11'",
-]
+dependencies = []
 
 [project.optional-dependencies]
 test = [
@@ -43,12 +41,11 @@ dev = [
   "pytest-cov >=3",
 ]
 docs = [
-  "sphinx>=4.0",
+  "sphinx>=7.0",
   "myst_parser>=0.13",
-  "sphinx_book_theme>=0.1.0",
   "sphinx_copybutton",
   "sphinx_autodoc_typehints",
-  "furo",
+  "furo>=2023.08.17",
 ]
 
 [project.urls]
@@ -56,6 +53,8 @@ Homepage = "https://github.com/gnn-tracking/hyperparameter_optimization2"
 "Bug Tracker" = "https://github.com/gnn-tracking/hyperparameter_optimization2/issues"
 Discussions = "https://github.com/gnn-tracking/hyperparameter_optimization2/discussions"
 Changelog = "https://github.com/gnn-tracking/hyperparameter_optimization2/releases"
+
+
 [tool.hatch]
 version.path = "src/hpo2/__init__.py"
 envs.default.dependencies = [
@@ -70,7 +69,6 @@ addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
 xfail_strict = true
 filterwarnings = [
   "error",
-  "ignore:(ast.Str|Attribute s|ast.NameConstant|ast.Num) is deprecated:DeprecationWarning:_pytest",
 ]
 log_cli_level = "INFO"
 testpaths = [
@@ -96,6 +94,7 @@ enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 warn_unreachable = true
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
+ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "hpo2.*"
@@ -133,7 +132,6 @@ extend-ignore = [
   "PLR",    # Design related pylint codes
   "E501",   # Line too long
 ]
-typing-modules = ["hpo2._compat.typing"]
 src = ["src"]
 unfixable = [
   "T20",  # Removes print statements
@@ -141,6 +139,8 @@ unfixable = [
 ]
 exclude = []
 flake8-unused-arguments.ignore-variadic-names = true
+# Uncomment if using a _compat.typing backport
+# typing-modules = ["hpo2._compat.typing"]
 
 [tool.ruff.per-file-ignores]
 "tests/**" = ["T20"]
@@ -149,7 +149,7 @@ flake8-unused-arguments.ignore-variadic-names = true
 
 [tool.pylint]
 py-version = "3.8"
-ignore-paths= ["src/hpo2/_version.py"]
+ignore-paths = [".*/_version.py"]
 reports.output-format = "colorized"
 similarities.ignore-imports = "yes"
 messages_control.disable = [

@@ -17,7 +17,9 @@ def lint(session: nox.Session) -> None:
     Run the linter.
     """
     session.install("pre-commit")
-    session.run("pre-commit", "run", "--all-files", *session.posargs)
+    session.run(
+        "pre-commit", "run", "--all-files", "--show-diff-on-failure", *session.posargs
+    )
 
 
 @nox.session
@@ -28,22 +30,22 @@ def pylint(session: nox.Session) -> None:
     # This needs to be installed into the package environment, and is slower
     # than a pre-commit check
     session.install(".", "pylint")
-    session.run("pylint", "src", *session.posargs)
+    session.run("pylint", "hpo2", *session.posargs)
 
 
 @nox.session
 def tests(session: nox.Session) -> None:
     """
-    Run the unit and regular tests. Use --cov to activate coverage.
+    Run the unit and regular tests.
     """
     session.install(".[test]")
     session.run("pytest", *session.posargs)
 
 
-@nox.session
+@nox.session(reuse_venv=True)
 def docs(session: nox.Session) -> None:
     """
-    Build the docs. Pass "--serve" to serve.
+    Build the docs. Pass "--serve" to serve. Pass "-b linkcheck" to check links.
     """
 
     parser = argparse.ArgumentParser()
@@ -56,7 +58,9 @@ def docs(session: nox.Session) -> None:
     if args.builder != "html" and args.serve:
         session.error("Must not specify non-HTML builder with --serve")
 
-    session.install(".[docs]")
+    extra_installs = ["sphinx-autobuild"] if args.serve else []
+
+    session.install("-e.[docs]", *extra_installs)
     session.chdir("docs")
 
     if args.builder == "linkcheck":
@@ -65,22 +69,19 @@ def docs(session: nox.Session) -> None:
         )
         return
 
-    session.run(
-        "sphinx-build",
+    shared_args = (
         "-n",  # nitpicky mode
         "-T",  # full tracebacks
-        "-W",  # Warnings as errors
-        "--keep-going",  # See all errors
-        "-b",
-        args.builder,
+        f"-b={args.builder}",
         ".",
         f"_build/{args.builder}",
         *posargs,
     )
 
     if args.serve:
-        session.log("Launching docs at http://localhost:8000/ - use Ctrl-C to quit")
-        session.run("python", "-m", "http.server", "8000", "-d", "_build/html")
+        session.run("sphinx-autobuild", *shared_args)
+    else:
+        session.run("sphinx-build", "--keep-going", *shared_args)
 
 
 @nox.session
@@ -108,9 +109,9 @@ def build(session: nox.Session) -> None:
     Build an SDist and wheel.
     """
 
-    build_p = DIR.joinpath("build")
-    if build_p.exists():
-        shutil.rmtree(build_p)
+    build_path = DIR.joinpath("build")
+    if build_path.exists():
+        shutil.rmtree(build_path)
 
     session.install("build")
     session.run("python", "-m", "build")
