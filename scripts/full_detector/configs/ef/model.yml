@@ -8,10 +8,10 @@ init_args:
       hidden_dim: 256
       depth: 5
   loss_fct:
-    class_path: gnn_tracking.metrics.losses.EdgeWeightBCELoss
+    class_path: gnn_tracking.metrics.losses.HaughtyFocalLoss
     init_args:
       pt_thld: 0.9
-      alpha: 0.9
+      alpha: 0.95
       gamma: 0.0
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt

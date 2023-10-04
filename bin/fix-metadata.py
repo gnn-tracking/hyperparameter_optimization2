@@ -7,6 +7,10 @@ from pathlib import Path
 import yaml
 from gnn_tracking.utils.log import logger
 
+"""
+To run over all files: ``ls lightning_logs|xargs fix-metadata -si``
+"""
+
 
 def cli():
     parser = argparse.ArgumentParser()

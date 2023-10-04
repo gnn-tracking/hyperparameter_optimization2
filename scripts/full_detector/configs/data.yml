@@ -9,7 +9,7 @@ train:
     - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/point_clouds_v10/part_6
     - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/point_clouds_v10/part_7
     - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/point_clouds_v10/part_8
-  sample_size: 900
+  sample_size: 450
 val:
   dirs:
     - /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/point_clouds_v10/part_9
