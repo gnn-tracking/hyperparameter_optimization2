@@ -23,5 +23,3 @@ srun \
   --trainer configs/oc/train.yml \
   --data configs/oc/data.yml \
   $@
-
-jobstats $SLURM_JOB_ID
