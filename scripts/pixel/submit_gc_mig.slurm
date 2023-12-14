@@ -10,7 +10,7 @@
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=kl5675@princeton.edu
 #SBATCH --signal=SIGUSR1@90
-# #SBATCH --partition=mig
+#SBATCH --partition=mig
 
 # debugging flags (optional)
 export NCCL_DEBUG=INFO

@@ -11,7 +11,7 @@ init_args:
   loss_fct:
     class_path: gnn_tracking.metrics.losses.metric_learning.GraphConstructionHingeEmbeddingLoss
     init_args:
-      lw_repulsive: 1
+      lw_repulsive: 0.5
       pt_thld: 0.9
       max_num_neighbors: 256
       p_attr: 2
