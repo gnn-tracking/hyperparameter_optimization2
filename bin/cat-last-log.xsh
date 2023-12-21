@@ -1,5 +1,7 @@
 #!/usr/bin/env xonsh
 
+# Cat the last SLURM log
+
 $XONSH_SHOW_TRACEBACK = True
 $RAISE_SUBPROC_ERROR = True
 

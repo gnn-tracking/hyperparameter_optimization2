@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Print CLI args that were used to start a run.
+# No args: select run interactively.
+
 # bash strict mode
 set -euo pipefail
 IFS=$'\n\t'
