@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import torch
 from gnn_tracking.training.callbacks import ExpandWandbConfig, PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule

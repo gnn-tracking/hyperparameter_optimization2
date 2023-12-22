@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import wandb
 from gnn_tracking.training.callbacks import PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
