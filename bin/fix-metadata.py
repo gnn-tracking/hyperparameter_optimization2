@@ -6,19 +6,23 @@ from pathlib import Path
 
 import yaml
 from gnn_tracking.utils.log import logger
+from pyfzf.pyfzf import FzfPrompt
 
-"""
+"""Fix metadata for wandb.
+
 To run over all files: ``ls lightning_logs|xargs fix-metadata -si``
 """
 
 
 def cli():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "names",
+        "-n",
+        "--names",
         type=str,
         help="Project names",
         nargs="+",
+        required=False,
     )
     parser.add_argument(
         "-i",
@@ -92,6 +96,10 @@ def sync_wandb(wandb_base_dir: Path) -> None:
 
 def main():
     args = cli().parse_args()
+    if not args.names:
+        fzf = FzfPrompt()
+        available_paths = Path("lightning_logs").iterdir()
+        args.names = fzf.prompt([path.name for path in available_paths], "--multi")
     for name in args.names:
         logger.info(f"{name=}")
         try:
