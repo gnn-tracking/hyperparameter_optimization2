@@ -44,6 +44,9 @@ class InvalidSearchResults(ValueError):
 
 
 def find_exactly_one_file(glob_str: str) -> Path:
+    """Find exactly one file matching glob_str. Raises InvalidSearchResults if
+    there are no or multiple results.
+    """
     results = list(Path().glob(glob_str))
     logger.debug(f"{glob_str=} with {results=}")
     if (n_results := len(results)) != 1:
@@ -53,11 +56,13 @@ def find_exactly_one_file(glob_str: str) -> Path:
 
 
 def find_hparams(project_name: str) -> Path:
+    """Find exactly one hparams.yaml file for project_name."""
     glob_str = f"./lightning_logs/*{project_name}*/hparams.yaml"
     return find_exactly_one_file(glob_str)
 
 
 def find_wandb_config(project_name: str) -> Path:
+    """Find exactly one wandb config file for project_name."""
     glob_str = f"./wandb/*{project_name}*/files/config.yaml"
     return find_exactly_one_file(glob_str)
 
@@ -88,6 +93,7 @@ def merge_configs(hparams_path: Path, wandb_config_path: Path) -> bool:
 
 
 def sync_wandb(wandb_base_dir: Path) -> None:
+    """Call wandb CL utility for sync."""
     logger.info(f"Syncing wandb for {wandb_base_dir=}")
     subprocess.run(["which", "wandb"], check=True)
     subprocess.run(["wandb", "--version"], check=True)
