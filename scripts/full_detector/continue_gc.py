@@ -40,7 +40,7 @@ def cli_main():
                 ModelCheckpoint(save_top_k=2, monitor="total", mode="min"),
             ],
             "logger": [tb_logger, wandb_logger],
-            "plugins": [SLURMEnvironment()],
+            "plugins": [SLURMEnvironment(auto_requeue=False)],
         },
         compile_model=True,
     )

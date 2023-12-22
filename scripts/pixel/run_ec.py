@@ -39,7 +39,7 @@ def cli_main():
                 ExpandWandbConfig(),
             ],
             "logger": [tb_logger, logger],
-            "plugins": [SLURMEnvironment()],
+            "plugins": [SLURMEnvironment(auto_requeue=False)],
         },
         seed_everything_default=42,
     )
