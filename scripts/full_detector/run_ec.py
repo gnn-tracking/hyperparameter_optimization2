@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import torch
 import wandb
 from gnn_tracking.training.callbacks import ExpandWandbConfig, PrintValidationMetrics

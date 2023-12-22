@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import wandb
 from gnn_tracking.utils.loading import TrackingDataModule
 from gnn_tracking.utils.nomenclature import random_trial_name

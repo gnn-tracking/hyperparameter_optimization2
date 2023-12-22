@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import torch
 from gnn_tracking.training.base import TrackingModule
 from gnn_tracking.utils.log import logger
