@@ -38,7 +38,7 @@ def cli_main():
                 TriggerWandbSyncLightningCallback(),
                 PrintValidationMetrics(),
                 ExpandWandbConfig(),
-                EarlyStopping(monitor="total", mode="min", patience=30),
+                EarlyStopping(monitor="total", mode="min", patience=20),
                 ModelCheckpoint(save_top_k=2, monitor="total", mode="min"),
             ],
             "logger": [tb_logger, logger],
