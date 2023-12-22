@@ -47,7 +47,7 @@ def cli_main():
                 ),
             ],
             "logger": [tb_logger, logger],
-            "plugins": [SLURMEnvironment()],
+            "plugins": [SLURMEnvironment(auto_requeue=False)],
         },
     )
 

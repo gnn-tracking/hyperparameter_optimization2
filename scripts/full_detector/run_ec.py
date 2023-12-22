@@ -45,7 +45,7 @@ def cli_main():
                 ModelCheckpoint(save_top_k=2, monitor="total", mode="min"),
             ],
             "logger": [tb_logger, logger],
-            "plugins": [SLURMEnvironment()],
+            "plugins": [SLURMEnvironment(auto_requeue=False)],
         },
         seed_everything_default=42,
     )
