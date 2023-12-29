@@ -3,21 +3,22 @@ init_args:
   model:
     class_path: gnn_tracking.models.track_condensation_networks.GraphTCNForMLGCPipeline
     init_args:
-      node_indim: 14
-      edge_indim: 28
+      node_indim: 38
+      edge_indim: 76
       h_dim: 128
       e_dim: 64
       hidden_dim: 92
       h_outdim: 24
       L_hc: 3
-      alpha_latent: 0.0
+      alpha_latent: 0.5
+      n_embedding_coords: 24
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
       ml_chkpt_path: /home/kl5675/Documents/23/git_sync/hyperparameter_optimization2/scripts/full_detector/lightning_logs/garrulous-peach-manatee/checkpoints/epoch=111-step=50400.compat.ckpt
-      max_num_neighbors: 1
+      max_num_neighbors: 15
       max_radius: 1.
-      use_embedding_features: false
+      use_embedding_features: true
       build_edge_features: true
   loss_fct:
     class_path: gnn_tracking.metrics.losses.metric_learning.GraphConstructionHingeEmbeddingLoss
