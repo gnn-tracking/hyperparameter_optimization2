@@ -1,35 +1,34 @@
 class_path: gnn_tracking.training.tc.TCModule
 init_args:
   model:
-    class_path: gnn_tracking.models.track_condensation_networks.PreTrainedECGraphTCN
+    class_path: gnn_tracking.models.track_condensation_networks.GraphTCNForMLGCPipeline
     init_args:
-      ec: null
-      node_indim: 38
-      edge_indim: 76
-      h_dim: 256
-      e_dim: 256
-      hidden_dim: 256
+      node_indim: 22
+      edge_indim: 44
+      h_dim: 192
+      e_dim: 192
+      hidden_dim: 192
       h_outdim: 24
       L_hc: 5
       alpha_latent: 0.5
-      n_embedding_coords: 24
+      n_embedding_coords: 8
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
-      ml_chkpt_path: /home/kl5675/Documents/23/git_sync/hyperparameter_optimization2/scripts/pixel/lightning_logs/godlike-auk-of-anger/checkpoints/epoch=116-step=105300.ckpt
+      ml_chkpt_path: /scratch/gpfs/IOJALVO/gnn-tracking/object_condensation/model_exchange/gc/quiet-origami-prawn_compatible.ckpt
       max_num_neighbors: 10
       max_radius: 1.
       use_embedding_features: true
       build_edge_features: true
-  lw_repulsive: 0.74
-  lw_background: 0.
-  background_loss: null
-  potential_loss:
+  loss_fct:
     class_path: gnn_tracking.metrics.losses.oc.CondensationLossRG
     init_args:
       q_min: 0.01
-      radius_threshold: 1.0
-      attr_pt_thld: 0.9
+      pt_thld: 0.9
+      lw_repulsive: 0.74
+      lw_noise: 0.
+      lw_coward: 0.
+      max_num_neighbors: 64
   cluster_scanner:
     class_path: gnn_tracking.postprocessing.dbscanscanner.DBSCANHyperParamScanner
     init_args:
