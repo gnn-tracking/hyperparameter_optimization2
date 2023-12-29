@@ -5,11 +5,11 @@ init_args:
     init_args:
       node_indim: 38
       edge_indim: 76
-      h_dim: 128
-      e_dim: 64
-      hidden_dim: 92
+      h_dim: 192
+      e_dim: 192
+      hidden_dim: 192
       h_outdim: 24
-      L_hc: 3
+      L_hc: 4
       alpha_latent: 0.5
       n_embedding_coords: 24
   preproc:
