@@ -6,7 +6,7 @@ import torch
 from gnn_tracking.utils.log import logger
 
 
-def make_compatible(path: Path) -> Path:
+def make_compatible(path: Path) -> None:
     logger.debug("Loading checkpoint %s", path)
     ckpt = torch.load(path, map_location="cpu")
     ckpt["state_dict"] = {
