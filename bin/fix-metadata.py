@@ -48,8 +48,8 @@ def find_exactly_one_file(glob_str: str) -> Path:
 
 
 def find_hparams(project_name: str) -> Path:
-    """Find exactly one hparams.yaml file for project_name."""
-    glob_str = f"./lightning_logs/*{project_name}*/hparams.yaml"
+    """Find exactly one config.yaml file for project_name."""
+    glob_str = f"./lightning_logs/*{project_name}*/config.yaml"
     return find_exactly_one_file(glob_str)
 
 
@@ -61,7 +61,7 @@ def main():
         available_paths = Path("lightning_logs").iterdir()
         args.names = fzf.prompt([path.name for path in available_paths], "--multi")
     for name in args.names:
-        hparams = yaml.safe_load(find_hparams(name).read_text())
+        hparams = yaml.safe_load(find_hparams(name).read_text())["model"]["init_args"]
         logger.debug(f"{name=} with {hparams=}")
         try:
             run = api.run(f"gnn_tracking/{args.project}/{name}")
