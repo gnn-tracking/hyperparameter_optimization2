@@ -20,7 +20,10 @@ def select_slurm_script() -> str:
     available_slurm_scripts = list(Path().glob("*.slurm"))
     logger.debug("%d slurm scripts found", len(available_slurm_scripts))
     fzf = FzfPrompt()
-    slurm_script = fzf.prompt([path.name for path in available_slurm_scripts])[0]
+    slurm_script = fzf.prompt(
+        [path.name for path in available_slurm_scripts],
+        "--header 'Select SLURM script to run' --header-first",
+    )[0]
     assert Path(slurm_script).is_file()
     return slurm_script
 
@@ -29,7 +32,10 @@ def select_run() -> Path:
     available_paths = list(Path("lightning_logs").iterdir())
     logger.debug("%d runs found", len(available_paths))
     fzf = FzfPrompt()
-    run = fzf.prompt([path.name for path in available_paths])
+    run = fzf.prompt(
+        [path.name for path in available_paths],
+        "--header 'Select run to continue from' --header-first",
+    )
     result = Path("lightning_logs", run[0])
     assert result.is_dir(), result
     return result
@@ -40,7 +46,10 @@ def select_checkpoint(run: Path) -> Path:
     assert len(available_checkpoints) > 0, "No checkpoints found"
     logger.debug("%d checkpoints found", len(available_checkpoints))
     fzf = FzfPrompt()
-    checkpoint = fzf.prompt([path.name for path in available_checkpoints])
+    checkpoint = fzf.prompt(
+        [path.name for path in available_checkpoints],
+        "--header 'Select checkpoint to continue from' --header-first",
+    )
     result = run / "checkpoints" / checkpoint[0]
     assert result.is_file()
     return result
@@ -97,9 +106,9 @@ if __name__ == "__main__":
         "sbatch",
         slurm_script,
         "--config",
-        str(repeat_config.resolve()),
+        str(repeat_config),
         "--ckpt_path",
-        str(checkpoint.resolve()),
+        str(checkpoint),
         *options_tokenized,
     ]
     logger.debug("Running command: %s", shlex.join(cmd))
