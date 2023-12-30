@@ -14,12 +14,14 @@ name = random_trial_name()
 
 logger = WandbLogger(
     project="gnn_tracking",
-    group="no-ec",
+    group="no-ec-gc-loss",
     offline=True,
     version=name,
     tags=["gc:godlike-auk-of-anger"],
 )
 
+# Make sure that wandb init is called
+_ = logger.experiment
 wandb.define_metric(
     "max_trk.double_majority_pt0.9",
     step_metric="trk.double_majority_pt0.9",

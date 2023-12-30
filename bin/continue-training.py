@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+"""Convenience script to interactively select a run and checkpoint to continue from.
+Additional options can be added. This works even if the run is still running.
+"""
+
 import copy
 import shlex
 import shutil
