@@ -68,7 +68,7 @@ def main():
         except (ValueError, wandb.errors.CommError):
             logger.error(f"Run {name} not found")
             continue
-        run.config = hparams
+        run.config |= hparams
         run.update()
 
 
