@@ -44,10 +44,16 @@ def cli_main():
                 PrintValidationMetrics(),
                 ExpandWandbConfig(),
                 EarlyStopping(
-                    monitor="trk.double_majority_pt0.9", mode="max", patience=10
+                    monitor="trk.perfect_pt0.9",
+                    mode="max",
+                    patience=20,
+                    verbose=True,
                 ),
                 ModelCheckpoint(
-                    save_top_k=2, monitor="trk.double_majority_pt0.9", mode="max"
+                    save_top_k=2,
+                    monitor="trk.perfect_pt0.9",
+                    mode="max",
+                    verbose=True,
                 ),
             ],
             "logger": [tb_logger, logger],
