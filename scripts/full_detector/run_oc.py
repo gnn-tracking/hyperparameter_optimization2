@@ -13,11 +13,11 @@ name = random_trial_name()
 
 
 logger = WandbLogger(
-    project="gnn_tracking",
-    group="full-detector-gc-loss",
+    project="gnn_tracking_fd",
+    group="gc-loss",
     offline=True,
     version=name,
-    tags=["full-detector", "gc:garrulous-peach-manatee", "no-ec", "gc-loss"],
+    tags=["gc:garrulous-peach-manatee", "no-ec", "gc-loss"],
 )
 
 # Make sure that wandb init is called
