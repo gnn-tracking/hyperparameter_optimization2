@@ -3,7 +3,7 @@ from gnn_tracking.training.callbacks import ExpandWandbConfig, PrintValidationMe
 from gnn_tracking.utils.loading import TrackingDataModule
 from gnn_tracking.utils.nomenclature import random_trial_name
 from lightning_fabric.plugins.environments.slurm import SLURMEnvironment
-from pytorch_lightning.callbacks import RichProgressBar
+from pytorch_lightning.callbacks import LearningRateMonitor, RichProgressBar
 from pytorch_lightning.cli import LightningCLI
 from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
 from wandb_osh.lightning_hooks import TriggerWandbSyncLightningCallback
@@ -37,6 +37,7 @@ def cli_main():
                 TriggerWandbSyncLightningCallback(),
                 PrintValidationMetrics(),
                 ExpandWandbConfig(),
+                LearningRateMonitor(logging_interval="step", log_momentum=True),
             ],
             "logger": [tb_logger, logger],
             "plugins": [SLURMEnvironment(auto_requeue=False)],
