@@ -1,0 +1,6 @@
+init_args:
+  scheduler:
+    class_path: torch.optim.lr_scheduler.ExponentialLR
+    init_args:
+      # 1e-3 at epoch 100
+      gamma: 0.933

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Cat configuration of run
+# No args: select run interactively.
+
 # bash strict mode
 set -euo pipefail
 IFS=$'\n\t'

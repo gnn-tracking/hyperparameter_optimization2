@@ -10,7 +10,7 @@
 #SBATCH --mem-per-cpu=10G
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=kl5675@princeton.edu
-#SBATCH --signal=SIGUSR1@90
+#SBATCH --signal=SIGUSR1@1800
 #SBATCH --constraint=gpu80
 
 # debugging flags (optional)
@@ -23,5 +23,3 @@ srun \
   --data configs/data.yml \
   --config configs/config.yml \
   $@
-
-jobstats $SLURM_JOB_ID

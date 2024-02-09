@@ -1,14 +1,12 @@
-from __future__ import annotations
-
 import torch
 import wandb
 from gnn_tracking.training.callbacks import ExpandWandbConfig, PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
 from gnn_tracking.utils.nomenclature import random_trial_name
+from lightning_fabric.plugins.environments.slurm import SLURMEnvironment
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint, RichProgressBar
 from pytorch_lightning.cli import LightningCLI
 from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
-from pytorch_lightning.plugins.environments import SLURMEnvironment
 from wandb_osh.lightning_hooks import TriggerWandbSyncLightningCallback
 
 name = random_trial_name()
@@ -16,12 +14,14 @@ name = random_trial_name()
 
 logger = WandbLogger(
     project="gnn_tracking",
-    group="no-ec",
+    group="no-ec-gc-loss",
     offline=True,
     version=name,
     tags=["gc:godlike-auk-of-anger"],
 )
 
+# Make sure that wandb init is called
+_ = logger.experiment
 wandb.define_metric(
     "max_trk.double_majority_pt0.9",
     step_metric="trk.double_majority_pt0.9",
@@ -49,7 +49,7 @@ def cli_main():
                 ),
             ],
             "logger": [tb_logger, logger],
-            "plugins": [SLURMEnvironment()],
+            "plugins": [SLURMEnvironment(auto_requeue=False)],
         },
     )
 

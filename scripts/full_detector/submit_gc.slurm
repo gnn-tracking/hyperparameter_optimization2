@@ -10,13 +10,10 @@
 #SBATCH --mem-per-cpu=10G
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=kl5675@princeton.edu
-#SBATCH --signal=SIGUSR1@90
-#SBATCH --constraint=gpu80
+#SBATCH --signal=SIGUSR1@1800
 
 # debugging flags (optional)
 export NCCL_DEBUG=INFO
 export PYTHONFAULTHANDLER=1
 
 srun python3 run_gc.py fit $@
-
-jobstats $SLURM_JOB_ID

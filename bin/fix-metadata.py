@@ -1,36 +1,32 @@
 #!/usr/bin/env python3
 import argparse
-import pprint
-import subprocess
 from pathlib import Path
 
+import wandb
+import wandb.errors
 import yaml
 from gnn_tracking.utils.log import logger
+from pyfzf.pyfzf import FzfPrompt
 
-"""
-To run over all files: ``ls lightning_logs|xargs fix-metadata -si``
+"""Fix metadata for wandb.
 """
 
 
 def cli():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "names",
+        "-n",
+        "--names",
         type=str,
         help="Project names",
         nargs="+",
+        required=False,
     )
     parser.add_argument(
-        "-i",
-        "--ignore-search-errors",
-        action="store_true",
-        help="Ignore errors from search results",
-    )
-    parser.add_argument(
-        "-s",
-        "--skip-sync-if-unchanged",
-        action="store_true",
-        help="Skip syncing if no changes to wandb config",
+        "-p",
+        "--project",
+        help="Wandb project",
+        required=True,
     )
     return parser
 
@@ -40,6 +36,9 @@ class InvalidSearchResults(ValueError):
 
 
 def find_exactly_one_file(glob_str: str) -> Path:
+    """Find exactly one file matching glob_str. Raises InvalidSearchResults if
+    there are no or multiple results.
+    """
     results = list(Path().glob(glob_str))
     logger.debug(f"{glob_str=} with {results=}")
     if (n_results := len(results)) != 1:
@@ -49,62 +48,28 @@ def find_exactly_one_file(glob_str: str) -> Path:
 
 
 def find_hparams(project_name: str) -> Path:
-    glob_str = f"./lightning_logs/*{project_name}*/hparams.yaml"
+    """Find exactly one config.yaml file for project_name."""
+    glob_str = f"./lightning_logs/*{project_name}*/config.yaml"
     return find_exactly_one_file(glob_str)
-
-
-def find_wandb_config(project_name: str) -> Path:
-    glob_str = f"./wandb/*{project_name}*/files/config.yaml"
-    return find_exactly_one_file(glob_str)
-
-
-def merge_configs(hparams_path: Path, wandb_config_path: Path) -> bool:
-    """Merges hparams into wandb config
-
-    Args:
-        hparams_path:
-        wandb_config_path:
-
-    Returns:
-        True if changes were made, false otherwise
-    """
-    with hparams_path.open() as f:
-        hparams = yaml.load(f, Loader=yaml.SafeLoader)
-    with wandb_config_path.open() as f:
-        existing_wandb_config = yaml.load(f, Loader=yaml.SafeLoader)
-    new_wandb_config = hparams | existing_wandb_config
-    if new_wandb_config == existing_wandb_config:
-        logger.info("No changes to wandb config")
-        return False
-    with wandb_config_path.open("w") as f:
-        yaml.dump(new_wandb_config, f)
-    logger.info("Merged wandb config")
-    logger.debug(pprint.pformat(new_wandb_config, indent=2))
-    return True
-
-
-def sync_wandb(wandb_base_dir: Path) -> None:
-    logger.info(f"Syncing wandb for {wandb_base_dir=}")
-    subprocess.run(["which", "wandb"], check=True)
-    subprocess.run(["wandb", "--version"], check=True)
-    subprocess.run(["wandb", "sync", str(wandb_base_dir)], check=True)
 
 
 def main():
+    api = wandb.Api()
     args = cli().parse_args()
+    if not args.names:
+        fzf = FzfPrompt()
+        available_paths = Path("lightning_logs").iterdir()
+        args.names = fzf.prompt([path.name for path in available_paths], "--multi")
     for name in args.names:
-        logger.info(f"{name=}")
+        hparams = yaml.safe_load(find_hparams(name).read_text())["model"]["init_args"]
+        logger.debug(f"{name=} with {hparams=}")
         try:
-            hparams_path = find_hparams(name)
-            wandb_config_path = find_wandb_config(name)
-        except InvalidSearchResults as e:
-            if args.ignore_search_errors:
-                logger.warning(e)
-                continue
-            raise e
-        changes = merge_configs(hparams_path, wandb_config_path)
-        if changes or not args.skip_sync_if_unchanged:
-            sync_wandb(wandb_config_path.parent.parent)
+            run = api.run(f"gnn_tracking/{args.project}/{name}")
+        except (ValueError, wandb.errors.CommError):
+            logger.error(f"Run {name} not found")
+            continue
+        run.config |= hparams
+        run.update()
 
 
 if __name__ == "__main__":
