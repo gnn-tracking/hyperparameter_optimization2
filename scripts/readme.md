@@ -20,8 +20,7 @@ Next, you need one of the python scripts `run_*.py`. If you have one that ends
 with the `_test.py` suffix, even better (it will have some things like
 checkpoints and more disabled). For example, `pixel/run_gc_test.py`.
 
-> [!WARNING]
-> Currently, all wandb settings are hard-coded in the `.py` files.
+> [!WARNING] Currently, all wandb settings are hard-coded in the `.py` files.
 > Make sure to select the right project and group there (though we can always
 > fix things later).
 
@@ -60,8 +59,7 @@ run_oc_test.py fit --config configs/config.yml --data configs/data.yml \
    --ckpt_path lightning_logs/organic-invisible-reindeer/persitent-checkpoints/epoch=197-step=89100.ckpt
 ```
 
-> [!tip]
-> More information on continuing runs see the section below.
+> [!tip] More information on continuing runs see the section below.
 
 ### Batch submission
 
@@ -80,7 +78,8 @@ sbatch submit_oc.slurm --config lightning_logs/fanatic-righteous-stork/repeat_co
 
 All checkpoints are in your `lightning_logs` directory.
 
-To resume training from a checkpoint, it is best to specify the `config.yaml` from `lightning_logs` and the checkpoint like so:
+To resume training from a checkpoint, it is best to specify the `config.yaml`
+from `lightning_logs` and the checkpoint like so:
 
 ```bash
 sbatch submit_oc.slurm \
