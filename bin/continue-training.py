@@ -43,16 +43,19 @@ def select_run() -> Path:
 
 def select_checkpoint(run: Path) -> Path:
     available_checkpoints = list((run / "checkpoints").glob("*.ckpt"))
+    if (run / "checkpoints_persist").is_dir():
+        available_checkpoints.extend(list((run / "checkpoints_persist").glob("*.ckpt")))
     assert len(available_checkpoints) > 0, "No checkpoints found"
     logger.debug("%d checkpoints found", len(available_checkpoints))
     fzf = FzfPrompt()
-    checkpoint = fzf.prompt(
-        [path.name for path in available_checkpoints],
-        "--header 'Select checkpoint to continue from' --header-first",
+    checkpoint = Path(
+        fzf.prompt(
+            available_checkpoints,
+            "--header 'Select checkpoint to continue from' --header-first",
+        )[0]
     )
-    result = run / "checkpoints" / checkpoint[0]
-    assert result.is_file()
-    return result
+    assert checkpoint.is_file()
+    return checkpoint
 
 
 def is_checkpoint_recent(checkpoint: Path) -> bool:
