@@ -64,6 +64,7 @@ def cli_main():
             ],
             "logger": [tb_logger, logger],
             "plugins": [SLURMEnvironment(auto_requeue=False)],
+            "max_time": "23:30:00",
         },
     )
 
