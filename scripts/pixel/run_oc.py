@@ -5,7 +5,6 @@ from gnn_tracking.utils.loading import TrackingDataModule
 from gnn_tracking.utils.nomenclature import random_trial_name
 from lightning_fabric.plugins.environments.slurm import SLURMEnvironment
 from pytorch_lightning.callbacks import (
-    EarlyStopping,
     LearningRateMonitor,
     ModelCheckpoint,
     RichProgressBar,
@@ -48,14 +47,18 @@ def cli_main():
                 TriggerWandbSyncLightningCallback(),
                 PrintValidationMetrics(),
                 ExpandWandbConfig(),
-                EarlyStopping(monitor="total", mode="min", patience=50),
+                # EarlyStopping(monitor="total", mode="min", patience=50),
                 ModelCheckpoint(
-                    save_top_k=2, monitor="trk.double_majority_pt0.9", mode="max"
+                    save_top_k=5, monitor="trk.double_majority_pt0.9", mode="max"
+                ),
+                ModelCheckpoint(
+                    every_n_epochs=10,
                 ),
                 LearningRateMonitor(logging_interval="step", log_momentum=True),
             ],
             "logger": [tb_logger, logger],
             "plugins": [SLURMEnvironment(auto_requeue=False)],
+            "max_time": "23:30:00",
         },
     )
 
