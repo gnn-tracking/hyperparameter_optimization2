@@ -66,7 +66,9 @@ def main():
         try:
             run = api.run(f"gnn_tracking/{args.project}/{name}")
         except (ValueError, wandb.errors.CommError):
-            logger.error(f"Run {name} not found")
+            logger.error(
+                f"Run {name} not found. Perhaps you specified the wrong project?"
+            )
             continue
         run.config |= hparams
         run.update()
