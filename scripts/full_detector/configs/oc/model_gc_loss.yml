@@ -12,11 +12,12 @@ init_args:
       L_hc: 3
       alpha_latent: 0.5
       n_embedding_coords: 24
+      heterogeneous_node_encoder: true
   preproc:
     class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
     init_args:
       ml_chkpt_path: /home/kl5675/Documents/23/git_sync/hyperparameter_optimization2/scripts/full_detector/lightning_logs/garrulous-peach-manatee/checkpoints/epoch=111-step=50400.compat.ckpt
-      max_num_neighbors: 15
+      max_num_neighbors: 20
       max_radius: 1.
       use_embedding_features: true
       build_edge_features: true
