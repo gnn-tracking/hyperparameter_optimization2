@@ -1,0 +1,11 @@
+init_args:
+  optimizer:
+    class_path: torch.optim.Adam
+    init_args:
+      lr: 1e-3
+  scheduler:
+    class_path: torch.optim.lr_scheduler.ExponentialLR
+    # disable
+    init_args:
+      gamma: 1
+      verbose: true
