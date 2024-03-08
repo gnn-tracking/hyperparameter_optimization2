@@ -14,7 +14,7 @@ name = random_trial_name()
 
 wandb_logger = WandbLogger(
     project="gnn_tracking_gc_fd",
-    group="full-detector",
+    group="continued-short",
     offline=True,
     version=name,
     tags=["continued", "short-pilot"],
