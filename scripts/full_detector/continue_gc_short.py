@@ -17,7 +17,7 @@ wandb_logger = WandbLogger(
     group="full-detector",
     offline=True,
     version=name,
-    tags=["continued"],
+    tags=["continued", "short-pilot"],
 )
 
 
@@ -41,6 +41,7 @@ def cli_main():
             ],
             "logger": [tb_logger, wandb_logger],
             "plugins": [SLURMEnvironment(auto_requeue=False)],
+            "max_time": "01:00:00",
         },
         compile_model=True,
     )
