@@ -1,10 +1,12 @@
 class_path: gnn_tracking.training.ml.MLModule
 init_args:
   model:
-    class_path: gnn_tracking.models.graph_construction.GraphConstructionFCNN
+    class_path: gnn_tracking.models.graph_construction.GraphConstructionHeteroEncResFCNN
     init_args:
       alpha: 0.5
-      depth: 5
+      depth_enc: 2
+      depth: 2
+      hidden_dim_enc: 362
       hidden_dim: 512
       in_dim: 14
       out_dim: 24
