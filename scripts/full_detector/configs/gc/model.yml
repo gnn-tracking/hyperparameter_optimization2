@@ -17,7 +17,7 @@ init_args:
       p_attr: 2
       p_rep: 2
       r_emb: 1
-      normalization: n_rep_edges
+      rep_normalization: n_rep_edges
   gc_scanner:
     class_path: gnn_tracking.graph_construction.k_scanner.GraphConstructionKNNScanner
     init_args:

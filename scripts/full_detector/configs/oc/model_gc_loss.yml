@@ -30,7 +30,7 @@ init_args:
       p_attr: 2
       p_rep: 2
       r_emb: 1
-      normalization: n_rep_edges
+      rep_normalization: n_rep_edges
   cluster_scanner:
     class_path: gnn_tracking.postprocessing.dbscanscanner.DBSCANHyperParamScanner
     init_args:
