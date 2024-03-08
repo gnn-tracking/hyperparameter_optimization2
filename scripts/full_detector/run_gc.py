@@ -21,7 +21,8 @@ logger = WandbLogger(
     project="gnn_tracking_gc_fd",
     offline=True,
     version=name,
-    tags=[],
+    tags=["hetero"],
+    group="hetero",
 )
 
 
