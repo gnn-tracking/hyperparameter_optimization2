@@ -126,7 +126,7 @@ model:
     preproc:
       class_path: gnn_tracking.models.graph_construction.MLGraphConstructionFromChkpt
       init_args:
-        ml_chkpt_path: /home/kl5675/Documents/23/git_sync/hyperparameter_optimization2/scripts/full_detector/lightning_logs/garrulous-peach-manatee/checkpoints/epoch=111-step=50400.compat.ckpt
+        ml_chkpt_path: /home/kl5675/Documents/23/git_sync/hyperparameter_optimization2/scripts/full_detector/lightning_logs/amber-gibbon-of-joy/checkpoints/epoch=78-step=71100.compat_newcompatible.ckpt
         ec_chkpt_path: ""
         ml_class_name: gnn_tracking.training.ml.MLModule
         ec_class_name: gnn_tracking.training.ec.ECModule
