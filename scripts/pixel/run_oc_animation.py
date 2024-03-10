@@ -28,7 +28,9 @@ def cli_main():
                 RichProgressBar(leave=True),
                 PrintValidationMetrics(),
                 ModelCheckpoint(
+                    dirpath="/scratch/gpfs/kl5675/checkpoints/animation",
                     every_n_train_steps=50,
+                    save_top_k=-1,
                 ),
                 LearningRateMonitor(logging_interval="step", log_momentum=True),
             ],
