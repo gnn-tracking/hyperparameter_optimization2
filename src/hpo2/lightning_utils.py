@@ -26,11 +26,14 @@ class TorchCompilePreprocCLI(LightningCLI):
         self.trainer.fit(model, **kwargs)
 
 
+# fixme: Unclear if this really only loads the weights, because
+#   optimizer state is also part of the state_dict
 def load_weights_only(
     model: LightningModule,
     trainer: Trainer,
     ckpt: str,
     *,
+    preproc_ckpt: str | None = None,
     compile_model: bool = False,
     continue_epoch: bool = True,
 ):
@@ -40,6 +43,14 @@ def load_weights_only(
     if compile_model:
         logger.debug("Compiling model")
         model.model = torch.compile(model.model)
+    if preproc_ckpt is not None:
+        logger.debug(f"Loading preproc state dict from {preproc_ckpt}")
+        ckpt_loaded = torch.load(preproc_ckpt, map_location=model.device)
+        ckpt_loaded["state_dict"] = {
+            key.replace("model.", "_ml."): value
+            for key, value in ckpt_loaded["state_dict"].items()
+        }
+        model.preproc.load_state_dict(ckpt_loaded["state_dict"])
     if continue_epoch:
         trainer.fit_loop.epoch_progress.load_state_dict(
             ckpt_loaded["loops"]["fit_loop"]["epoch_progress"]
@@ -57,14 +68,16 @@ class ContinueTrainingCLI(LightningCLI):
         super().__init__(**kwargs)
 
     def add_arguments_to_parser(self, parser: LightningArgumentParser) -> None:
-        # Want weights only, not optimizer states etc.
+        # note that this is different from the usual chkpt_path that lightning uses
         parser.add_argument("--ckpt", type=str, required=True)
+        parser.add_argument("--preproc-ckpt", required=False)
 
     def fit(self, model: TrackingModule, **kwargs):
         load_weights_only(
             model=model,
             trainer=self.trainer,
             ckpt=self.config["fit"]["ckpt"],
+            preproc_ckpt=self.config["fit"]["preproc_ckpt"],
             compile_model=self._compile_model,
             continue_epoch=self._continue_epoch,
         )
