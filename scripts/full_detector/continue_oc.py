@@ -10,9 +10,10 @@ from pytorch_lightning.callbacks import (
     ModelCheckpoint,
     RichProgressBar,
 )
-from pytorch_lightning.cli import LightningCLI
 from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
 from wandb_osh.lightning_hooks import TriggerWandbSyncLightningCallback
+
+from hpo2.lightning_utils import ContinueTrainingCLI
 
 name = random_trial_name()
 
@@ -22,7 +23,7 @@ logger = WandbLogger(
     group="gc-loss-legacy-norm",
     offline=True,
     version=name,
-    tags=["gc:garrulous-peach-manatee", "no-ec", "gc-loss", "gc-loss-legacy-norm"],
+    tags=["no-ec", "gc-loss", "continued"],
 )
 
 # Make sure that wandb init is called
@@ -40,7 +41,7 @@ def cli_main():
     torch.set_float32_matmul_precision("medium")
 
     # noinspection PyUnusedLocal
-    cli = LightningCLI(  # noqa: F841
+    cli = ContinueTrainingCLI(  # noqa: F841
         datamodule_class=TrackingDataModule,
         trainer_defaults={
             "callbacks": [

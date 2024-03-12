@@ -5,11 +5,11 @@ init_args:
     init_args:
       node_indim: 38
       edge_indim: 76
-      h_dim: 192
-      e_dim: 192
-      hidden_dim: 192
+      h_dim: 256
+      e_dim: 256
+      hidden_dim: 256
       h_outdim: 24
-      L_hc: 3
+      L_hc: 4
       alpha_latent: 0.5
       n_embedding_coords: 24
       heterogeneous_node_encoder: true
@@ -30,6 +30,7 @@ init_args:
       p_attr: 2
       p_rep: 2
       r_emb: 1
+      rep_normalization: n_rep_edges
   cluster_scanner:
     class_path: gnn_tracking.postprocessing.dbscanscanner.DBSCANHyperParamScanner
     init_args:

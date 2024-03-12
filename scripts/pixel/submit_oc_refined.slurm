@@ -10,7 +10,6 @@
 #SBATCH --mem-per-cpu=25G
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=kl5675@princeton.edu
-#SBATCH --signal=SIGUSR1@1800
 #SBATCH --constraint=gpu80
 
 # debugging flags (optional)

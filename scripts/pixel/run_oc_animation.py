@@ -1,29 +1,17 @@
 import torch
-from gnn_tracking.training.callbacks import ExpandWandbConfig, PrintValidationMetrics
+from gnn_tracking.training.callbacks import PrintValidationMetrics
 from gnn_tracking.utils.loading import TrackingDataModule
 from gnn_tracking.utils.nomenclature import random_trial_name
 from lightning_fabric.plugins.environments.slurm import SLURMEnvironment
 from pytorch_lightning.callbacks import (
-    EarlyStopping,
     LearningRateMonitor,
     ModelCheckpoint,
     RichProgressBar,
 )
-from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
-from wandb_osh.lightning_hooks import TriggerWandbSyncLightningCallback
-
-from hpo2.lightning_utils import ContinueTrainingCLI
+from pytorch_lightning.cli import LightningCLI
+from pytorch_lightning.loggers import TensorBoardLogger
 
 name = random_trial_name()
-
-
-wandb_logger = WandbLogger(
-    project="gnn_tracking_gc_fd",
-    group="",
-    offline=True,
-    version=name,
-    tags=["continued"],
-)
 
 
 tb_logger = TensorBoardLogger(".", version=name)
@@ -33,22 +21,24 @@ def cli_main():
     torch.set_float32_matmul_precision("medium")
 
     # noinspection PyUnusedLocal
-    cli = ContinueTrainingCLI(  # noqa: F841
+    cli = LightningCLI(  # noqa: F841
         datamodule_class=TrackingDataModule,
         trainer_defaults={
             "callbacks": [
                 RichProgressBar(leave=True),
-                TriggerWandbSyncLightningCallback(),
                 PrintValidationMetrics(),
-                ExpandWandbConfig(),
-                EarlyStopping(monitor="total", mode="min", patience=10),
-                ModelCheckpoint(save_top_k=2, monitor="total", mode="min"),
+                ModelCheckpoint(
+                    dirpath="/scratch/gpfs/kl5675/checkpoints/animation",
+                    every_n_train_steps=50,
+                    save_top_k=-1,
+                ),
                 LearningRateMonitor(logging_interval="step", log_momentum=True),
             ],
-            "logger": [tb_logger, wandb_logger],
+            "logger": [tb_logger],
             "plugins": [SLURMEnvironment(auto_requeue=False)],
+            "max_time": "23:30:00",
+            "max_epochs": 50,
         },
-        compile_model=True,
     )
 
 

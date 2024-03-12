@@ -9,15 +9,14 @@ init_args:
       in_dim: 14
       out_dim: 24
   loss_fct:
-    class_path: gnn_tracking.metrics.losses.metric_learning.GraphConstructionHingeEmbeddingLoss
+    class_path: gnn_tracking.metrics.losses.metric_learning.OldGraphConstructionHingeEmbeddingLoss
     init_args:
       lw_repulsive: 0.006
-      pt_thld: 0.9
+      attr_pt_thld: 0.9
       max_num_neighbors: 256
       p_attr: 2
       p_rep: 2
       r_emb: 1
-      rep_normalization: n_rep_edges
   gc_scanner:
     class_path: gnn_tracking.graph_construction.k_scanner.GraphConstructionKNNScanner
     init_args:
