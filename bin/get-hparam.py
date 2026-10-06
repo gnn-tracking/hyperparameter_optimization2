@@ -3,6 +3,7 @@
 """Print config values for a given key in multiple runs that can be selected
 interactively. In fzf, use Tab to select multiple runs and Enter to confirm.
 """
+
 # ruff: noqa: T201
 
 import argparse
