@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-"""Update summary metrics in wandb, in case they weren't properly tracked
-"""
+"""Update summary metrics in wandb, in case they weren't properly tracked"""
 
 import argparse
 import copy
